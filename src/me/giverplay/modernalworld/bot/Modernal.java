@@ -1,7 +1,10 @@
 package me.giverplay.modernalworld.bot;
 
+import java.util.Scanner;
+
 import javax.security.auth.login.LoginException;
 
+import me.giverplay.modernalworld.bot.command.CommandManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
@@ -11,9 +14,15 @@ public class Modernal
 	
 	public static void main(String[] args)
 	{
+		System.out.println("Insira seu Token para continuar:\n");
+		Scanner s = new Scanner(System.in);
+		
+		String token = s.nextLine();
+		s.close();
+		
 		try
 		{
-			jda = new JDABuilder().setToken(Constantes.TOKEN).build().awaitReady();
+			jda = new JDABuilder().setToken(token).build().awaitReady();
 		} 
 		catch (LoginException e)
 		{

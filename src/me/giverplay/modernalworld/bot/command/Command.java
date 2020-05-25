@@ -1,4 +1,4 @@
-package me.giverplay.modernalworld.bot;
+package me.giverplay.modernalworld.bot.command;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
