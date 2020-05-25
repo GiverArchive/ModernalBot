@@ -3,6 +3,7 @@ package me.giverplay.modernalworld.bot.command;
 import java.util.HashMap;
 
 import me.giverplay.modernalworld.bot.Modernal;
+import me.giverplay.modernalworld.bot.command.comandos.ComandoToctoc;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

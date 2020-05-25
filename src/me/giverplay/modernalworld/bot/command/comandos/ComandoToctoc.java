@@ -1,4 +1,4 @@
-package me.giverplay.modernalworld.bot.command;
+package me.giverplay.modernalworld.bot.command.comandos;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import me.giverplay.modernalworld.bot.command.Command;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
