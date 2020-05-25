@@ -14,26 +14,31 @@ public class Modernal
 	
 	public static void main(String[] args)
 	{
-		System.out.println("Insira seu Token para continuar:\n");
+		System.out.println("Insira seu Token para continuar:");
 		Scanner s = new Scanner(System.in);
+		boolean sair = false;
+		String token;
 		
-		String token = s.nextLine();
+		while(!sair){
+			token = s.nextLine();
+			
+			try
+			{
+				jda = new JDABuilder().setToken(token).build();
+				sair = true;
+			} 
+			catch (LoginException e)
+			{
+				System.out.println("Falha ao logar no Discord, verifique se esse é o token correto");
+				System.out.println("Digite novamente:");
+			}
+		}
+		
 		s.close();
 		
-		try
-		{
-			jda = new JDABuilder().setToken(token).build().awaitReady();
-		} 
-		catch (LoginException e)
-		{
-			System.out.println("Falha ao logar no Discord");
-			e.printStackTrace();
-		} 
-		catch (InterruptedException e)
-		{
-			System.out.println("Programa foi forçado a fechar, cacete, o tal do usuário é o bicho mais burro já inventado");
-			e.printStackTrace();
-		}
+		System.out.println("\n\nMuito bem, podemos começar");
+		System.out.println("Ignore as mensagens de vermelho, aquilo é normal");
+		
 		
 		setup();
 	}
