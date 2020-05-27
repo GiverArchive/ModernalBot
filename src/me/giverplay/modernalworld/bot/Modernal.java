@@ -3,13 +3,16 @@ package me.giverplay.modernalworld.bot;
 import java.util.Scanner;
 
 import javax.security.auth.login.LoginException;
+import javax.swing.JFrame;
 
 import me.giverplay.modernalworld.bot.command.CommandManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
-public class Modernal
+public class Modernal extends JFrame
 {
+	private static final long serialVersionUID = 1L;
+	
 	private static JDA jda;
 	
 	public static void main(String[] args)
@@ -40,10 +43,26 @@ public class Modernal
 		System.out.println("Ignore as mensagens de vermelho, aquilo é normal");
 		
 		
+	}
+	
+	public Modernal()
+	{
+		setupFrame();
 		setup();
 	}
 	
-	private static void setup()
+	private void setupFrame()
+	{
+		setTitle("Modernal Bot Manager");
+		add(this);
+		setResizable(false);
+		pack();
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	private void setup()
 	{
 		new CommandManager();
 	}
