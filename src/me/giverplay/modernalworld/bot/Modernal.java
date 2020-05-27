@@ -106,7 +106,6 @@ public class Modernal extends JFrame
 		int y1 = (int) bounds.getMinY();
 		int y2 = (int) bounds.getMaxY();
 		
-		graphics.setColor(Color.BLACK);
 		graphics.drawRect(x1, y1, x2 - x1, y2 - y1);
 	}
 	
