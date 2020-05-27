@@ -108,7 +108,6 @@ public class Modernal extends JFrame
 		
 		graphics.setColor(Color.BLACK);
 		graphics.drawRect(x1, y1, x2 - x1, y2 - y1);
-		graphics.drawRect(100, 100, 100, 100);
 	}
 	
 	private void setup()
