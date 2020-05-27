@@ -1,22 +1,41 @@
 package me.giverplay.modernalworld.bot;
 
-import java.util.Scanner;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 
-import javax.security.auth.login.LoginException;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import me.giverplay.modernalworld.bot.command.CommandManager;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
 
 public class Modernal extends JFrame
 {
 	private static final long serialVersionUID = 1L;
+	private static final int WIDTH = 1080;
+	private static final int HEIGHT = 640;
 	
 	private static JDA jda;
 	
+	private JPanel panel;
+	private JLabel T1;
+	
 	public static void main(String[] args)
 	{
+		new Modernal();
+	}
+	
+	public Modernal()
+	{
+		setupFrame();
+		setupAssets();
+		loadInfo();
+		//setup();
+		
+		/*
 		System.out.println("Insira seu Token para continuar:");
 		Scanner s = new Scanner(System.in);
 		boolean sair = false;
@@ -41,25 +60,38 @@ public class Modernal extends JFrame
 		
 		System.out.println("\n\nMuito bem, podemos começar");
 		System.out.println("Ignore as mensagens de vermelho, aquilo é normal");
-		
-		
-	}
-	
-	public Modernal()
-	{
-		setupFrame();
-		setup();
+		*/
 	}
 	
 	private void setupFrame()
 	{
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setTitle("Modernal Bot Manager");
-		add(this);
 		setResizable(false);
 		pack();
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+	
+	private void setupAssets()
+	{
+		panel = new JPanel();
+		setContentPane(panel);
+		
+		T1 = new JLabel();
+		T1.setFont(new Font("3D Hand Drawns", Font.PLAIN, 30));
+		T1.setBackground(Color.WHITE);
+		T1.setHorizontalAlignment(SwingConstants.CENTER);
+		T1.setBounds(20, 20, 1040, 70);
+		T1.setOpaque(false);
+		
+		panel.add(T1);
+	}
+	
+	public void loadInfo()
+	{
+		T1.setText("Modernal Bot Manager");
 	}
 	
 	private void setup()
