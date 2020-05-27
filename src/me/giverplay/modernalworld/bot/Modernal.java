@@ -3,6 +3,8 @@ package me.giverplay.modernalworld.bot;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -91,7 +93,22 @@ public class Modernal extends JFrame
 	
 	public void loadInfo()
 	{
-		T1.setText("Modernal Bot Manager");
+		String titulo = "Modernal Bot Manager";
+		
+		T1.setText(titulo);
+		
+		Graphics graphics = T1.getGraphics();
+		
+		Rectangle2D bounds = T1.getFontMetrics(T1.getFont()).getStringBounds(titulo, graphics);
+		
+		int x1 = (int) bounds.getMinX();
+		int x2 = (int) bounds.getMaxX();
+		int y1 = (int) bounds.getMinY();
+		int y2 = (int) bounds.getMaxY();
+		
+		graphics.setColor(Color.BLACK);
+		graphics.drawRect(x1, y1, x2 - x1, y2 - y1);
+		graphics.drawRect(100, 100, 100, 100);
 	}
 	
 	private void setup()
