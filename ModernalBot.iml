@@ -25,5 +25,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="com.google.guava:guava:29.0-jre" level="application" />
+    <orderEntry type="library" name="org.apache.commons:commons-lang3:3.10" level="application" />
   </component>
 </module>
