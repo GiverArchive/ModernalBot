@@ -5,7 +5,9 @@ package org.bukkit.configuration;
  */
 public class InvalidConfigurationException extends Exception {
 
-    /**
+	private static final long serialVersionUID = 1L;
+
+		/**
      * Creates a new instance of InvalidConfigurationException without a
      * message or cause.
      */

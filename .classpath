@@ -4,5 +4,9 @@
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/Herobrine/Desktop/Desenvolvimento/Jars/JDA-4.1.1_109-withDependencies.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Herobrine/Desktop/Desenvolvimento/Jars/commons-io-2.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Herobrine/Desktop/Desenvolvimento/Jars/commons-lang3-3.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Herobrine/Desktop/Desenvolvimento/Jars/guava-29.0-jre.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Herobrine/Desktop/Desenvolvimento/Jars/snakeyaml-1.26.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
