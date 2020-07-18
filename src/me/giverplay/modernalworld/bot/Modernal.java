@@ -1,52 +1,69 @@
 package me.giverplay.modernalworld.bot;
 
+import javax.security.auth.login.LoginException;
+
 import me.giverplay.modernalworld.bot.command.CommandManager;
+import me.giverplay.modernalworld.bot.config.Config;
+import me.giverplay.modernalworld.bot.config.JSONConfig;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
-import javax.security.auth.login.LoginException;
-
 public class Modernal
 {
-	private static JDA jda;
-	private static String token = "null";
-
+	private static Modernal instance;
+	
+	private Config config;
+	private String token;
+	private JDA jda;
+	
 	public static void main(String[] args)
 	{
-		try
-		{
-			jda = new JDABuilder()
-							.setToken(token)
-							.build()
-							.awaitReady();
-		}
-		catch (LoginException e)
-		{
-			System.out.println("Erro de login: Token fornecido é inválido ou a conexão está limitada");
-			System.exit(0);
-		}
-		catch (InterruptedException e)
-		{
-			System.out.println("Programa foi forçado a fechar (InterrupedException)");
-			System.exit(0);
-		}
-
 		new Modernal();
 	}
 	
-	public Modernal()
+	private Modernal()
 	{
+		instance = this;
 		setup();
-	
 	}
 	
 	private void setup()
 	{
-		new CommandManager();
+		config = new JSONConfig("bot");
+		token = config.getString("token");
+		
+		try
+		{
+			jda = new JDABuilder()
+					.setToken(token)
+					.build()
+					.awaitReady();
+		}
+		catch(LoginException e)
+		{
+			System.out.println("Token inválida ou erro de conexão");
+			System.exit(0);
+		}
+		catch(InterruptedException e)
+		{
+			System.out.println("Interrupeted Exception");
+		}
+		
+		new CommandManager(this);
 	}
 	
-	public static JDA getJDA()
+	public JDA getJDA()
 	{
-		return jda;
+		return this.jda;
+	}
+	
+	public Config getConfig()
+	{
+		return this.config;
+	}
+	
+	public static Modernal getInstance()
+	{
+		return instance;
 	}
 }

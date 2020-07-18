@@ -1,22 +1,33 @@
 package me.giverplay.modernalworld.bot.command;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.jetbrains.annotations.Nullable;
 
 import me.giverplay.modernalworld.bot.Modernal;
-import me.giverplay.modernalworld.bot.command.comandos.ComandoToctoc;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class CommandManager extends ListenerAdapter
 {
-	private HashMap<String, Command> commands = new HashMap<>();
+	private List<Command> commands = new ArrayList<>();
+	
+	private Modernal modernal;
+	private String prefix;
 	private JDA bot;
 	
-	public CommandManager()
+	public CommandManager(Modernal main)
 	{
-		bot = Modernal.getJDA();
+		modernal = main;
+		prefix = modernal.getConfig().getString("prefix");
+		
+		bot = main.getJDA();
 		bot.addEventListener(this);
 		
 		registerCommands();
@@ -24,13 +35,32 @@ public class CommandManager extends ListenerAdapter
 	
 	public void registerCommands()
 	{
-		// AQUI EU REGISTRO OS COMANDOS
-		addComando("toctoc", new ComandoToctoc());
+		
 	}
 	
-	public void addComando(String nome, Command cmd)
+	public void addComando(Command cmd)
 	{
-		commands.put(nome, cmd);
+		if(commands.stream().anyMatch((c) -> c.getName().equalsIgnoreCase(cmd.getName())))
+			throw new IllegalArgumentException("This command name is already registered");
+		
+		commands.add(cmd);
+	}
+	
+	@Nullable
+	public Command getCommand(String name)
+	{
+		String nameL = name.toLowerCase();
+		
+		synchronized (this)
+		{
+			for(Command cmd : commands)
+			{
+				if(cmd.getName().equals(nameL) || cmd.getAliases().contains(nameL))
+					return cmd;
+			}
+		}
+		
+		return null;
 	}
 	
 	@Override
@@ -38,40 +68,26 @@ public class CommandManager extends ListenerAdapter
 	{
 		Message msg = event.getMessage();
 		
-		if(msg.getAuthor().isBot()) return; // Evitar msg de bot etc etc etc
+		if(msg.getAuthor().isBot() || msg.isWebhookMessage()) return;
 		
-		String content = msg.getContentRaw();
+		String[] split = event.getMessage().getContentRaw()
+				.replaceFirst("(?i)" + Pattern.quote(prefix), "")
+				.split("\\s+");
 		
-		if(content.startsWith("+"))
+		Command cmd = this.getCommand(split[0].toLowerCase());
+		
+		if (cmd != null) 
 		{
-			String cmd = content.split(" ")[0].replace("+", "").trim();
-			if(commands.containsKey(cmd))
-			{
-				String argPreSplit = "";
-				String[] array;
-				
-				try
-				{
-					for(int i = 1; i < cmd.length(); i++)
-					{
-						argPreSplit += cmd.split(" ")[i];
-						argPreSplit += "";
-					}
-					
-					array = argPreSplit.split(" ");
-				}
-				catch(ArrayIndexOutOfBoundsException e)
-				{
-					array = new String[1];
-				}
-				
-				boolean sucess = commands.get(cmd).execute(msg, msg.getAuthor(), msg.getTextChannel(), array);
-				
-				if(!sucess) System.out.println("CommandManager.onGuildMessageReceived() -> returned false");
-				return;
-			}
+			TextChannel ch = event.getChannel();
+			ch.sendTyping().queue();
+			List<String> args = Arrays.asList(split).subList(1, split.length);
 			
-			msg.getTextChannel().sendMessage(msg.getAuthor().getAsMention() + " Comando desconhecido").queue();
+			boolean b = cmd.execute(msg, msg.getAuthor(), ch, args);
+			
+			if(!b)
+			{
+				System.out.println("Command " + cmd.getName() + " returned false");
+			}
 		}
 	}
 }
